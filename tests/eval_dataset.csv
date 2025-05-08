@@ -1,6 +1,22 @@
-question,answer
-¿Qué cubre el plan de beneficios Northwind Health Plus?,"El plan Northwind Health Plus cubre atención médica, dental, de la vista, medicamentos recetados y servicios de salud mental."
-¿Cuál es el procedimiento para tomar una licencia por maternidad?,Debes notificar a Recursos Humanos al menos 30 días antes de la fecha esperada y presentar la documentación médica correspondiente.
-¿Qué incluye el programa PerksPlus?,"PerksPlus incluye descuentos en gimnasios, membresías de bienestar, vales de alimentos y soporte financiero."
-¿Qué responsabilidades tiene un analista de datos según el role library?,"Según el Role Library, un analista de datos debe recolectar, limpiar y analizar datos para generar reportes estratégicos para el negocio."
-¿Cuáles son los beneficios estándar de Northwind?,"Los beneficios estándar incluyen seguro médico básico, vacaciones pagadas, y plan de retiro 401(k)."
+query,answer
+¿Cuál es la diferencia entre probabilidad clásica y frecuentista?,"La probabilidad clásica es a priori (basada en supuestos teóricos de equiprobabilidad), mientras que la frecuentista es a posteriori (basada en observación empírica y repetición de experimentos)"
+¿Cómo se calcula el valor esperado de una variable binomial?,El valor esperado de una variable aleatoria binomial se calcula multiplicando la probabilidad de éxito por el número de ensayos
+¿Qué características definen una variable aleatoria discreta?,Toma valores contables - Los valores posibles pueden listarse - Tiene una función de probabilidad - Cada probabilidad es no negativa
+¿Qué es el espacio muestral y cómo se define?,El espacio muestral es el conjunto de todos los resultados posibles de un experimento aleatorio. Se denota con S o Ω.
+¿Cuál es la diferencia entre estadística descriptiva e inferencial?,La estadística descriptiva resume y presenta datos; la inferencial realiza generalizaciones y predicciones sobre una población usando una muestra.
+¿Qué tipos de gráficos se usan para representar datos cualitativos?,Gráfico de barras - Gráfico de sectores - Pictogramas - Diagramas de Pareto
+¿Qué significa el término “población” en estadística?,"En estadística, el término población se refiere al conjunto total de elementos (personas, objetos, eventos, mediciones, etc.) que comparten una o más características y sobre los cuales se desea obtener información."
+¿Qué condiciones deben cumplirse para que la media sea una buena medida de centralización?,Distribución simétrica - Ausencia de valores atípicos - Datos numéricos a nivel de intervalo o razón - Homogeneidad en la dispersión
+¿Qué criterios se usan para determinar si un valor es un outlier?,Un outlier (valor atípico) es un dato que se aleja significativamente del resto del conjunto
+¿Qué métodos se pueden usar para detectar valores atípicos?,Rango intercuartílico (IQR) - Puntaje Z (Z-score) - Regla de 3 sigmas - Boxplot (diagrama de caja)
+¿En qué situaciones es preferible usar la mediana en lugar de la media?,Distribuciones asimétricas o sesgadas - Presencia de valores atípicos (outliers) - Datos en escala ordinal
+¿Qué indica una desviación estándar alta respecto a los datos?,"Indica que los datos están muy dispersos respecto a la media, es decir, hay una alta variabilidad en el conjunto."
+¿Qué representa la moda y cómo se interpreta en conjuntos multimodales?,"La moda es el valor que más se repite; en conjuntos multimodales hay varias modas, lo que indica múltiples concentraciones de datos."
+¿Qué papel cumple el rango en el análisis exploratorio?,"El rango muestra la diferencia entre el valor máximo y el mínimo, dando una idea general de la dispersión de los datos."
+¿Qué condiciones deben cumplirse para aplicar la distribución binomial?,"Número fijo de ensayos, solo dos posibles resultados por ensayo, probabilidad constante de éxito y ensayos independientes."
+¿Qué significa el término “población” en estadística?,Se refiere al conjunto total de elementos sobre los cuales se desea obtener información o realizar inferencias.
+¿Cómo se representa gráficamente la independencia de eventos?,"Con diagramas de Venn sin intersección, o con tablas de contingencia donde la probabilidad conjunta equivale al producto de las marginales."
+¿Qué información proporciona un boxplot sobre la dispersión y simetría?,"Muestra la mediana, los cuartiles, el rango intercuartílico y los posibles valores atípicos, lo que permite evaluar simetría y variabilidad."
+¿Cómo se calcula el valor esperado de una variable binomial?,Multiplicando el número de ensayos por la probabilidad de éxito (E[X] = n * p).
+¿En qué se diferencia la escala ordinal de la de intervalo?,"La escala ordinal permite ordenar los datos, pero no medir distancias exactas entre ellos, a diferencia de la escala de intervalo."
+¿Qué errores comunes se deben evitar al construir gráficos estadísticos?,"No etiquetar ejes, usar escalas inadecuadas, sobrecargar de información o elegir el tipo de gráfico incorrecto para el tipo de dato."

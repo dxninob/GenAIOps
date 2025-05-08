@@ -1,22 +1,86 @@
 [
     {
-        "question": "\u00bfQu\u00e9 cubre el plan de beneficios Northwind Health Plus?",
-        "answer": "El plan Northwind Health Plus cubre atenci\u00f3n m\u00e9dica, dental, de la vista, medicamentos recetados y servicios de salud mental."
+        "question": "¿Cuál es la diferencia entre probabilidad clásica y frecuentista?",
+        "answer": "La probabilidad clásica es a priori (basada en supuestos teóricos de equiprobabilidad), mientras que la frecuentista es a posteriori (basada en observación empírica y repetición de experimentos)"
     },
     {
-        "question": "\u00bfCu\u00e1l es el procedimiento para tomar una licencia por maternidad?",
-        "answer": "Debes notificar a Recursos Humanos al menos 30 d\u00edas antes de la fecha esperada y presentar la documentaci\u00f3n m\u00e9dica correspondiente."
+        "question": "¿Cómo se calcula el valor esperado de una variable binomial?",
+        "answer": "El valor esperado de una variable aleatoria binomial se calcula multiplicando la probabilidad de éxito por el número de ensayos"
     },
     {
-        "question": "\u00bfQu\u00e9 incluye el programa PerksPlus?",
-        "answer": "PerksPlus incluye descuentos en gimnasios, membres\u00edas de bienestar, vales de alimentos y soporte financiero."
+        "question": "¿Qué características definen una variable aleatoria discreta?",
+        "answer": "Toma valores contables - Los valores posibles pueden listarse - Tiene una función de probabilidad - Cada probabilidad es no negativa"
     },
     {
-        "question": "\u00bfQu\u00e9 responsabilidades tiene un analista de datos seg\u00fan el role library?",
-        "answer": "Seg\u00fan el Role Library, un analista de datos debe recolectar, limpiar y analizar datos para generar reportes estrat\u00e9gicos para el negocio."
+        "question": "¿Qué es el espacio muestral y cómo se define?",
+        "answer": "El espacio muestral es el conjunto de todos los resultados posibles de un experimento aleatorio. Se denota con S o Ω."
     },
     {
-        "question": "\u00bfCu\u00e1les son los beneficios est\u00e1ndar de Northwind?",
-        "answer": "Los beneficios est\u00e1ndar incluyen seguro m\u00e9dico b\u00e1sico, vacaciones pagadas, y plan de retiro 401(k)."
+        "question": "¿Cuál es la diferencia entre estadística descriptiva e inferencial?",
+        "answer": "La estadística descriptiva resume y presenta datos; la inferencial realiza generalizaciones y predicciones sobre una población usando una muestra."
+    },
+    {
+        "question": "¿Qué tipos de gráficos se usan para representar datos cualitativos?",
+        "answer": "Gráfico de barras - Gráfico de sectores - Pictogramas - Diagramas de Pareto"
+    },
+    {
+        "question": "¿Qué significa el término “población” en estadística?",
+        "answer": "En estadística, el término población se refiere al conjunto total de elementos (personas, objetos, eventos, mediciones, etc.) que comparten una o más características y sobre los cuales se desea obtener información."
+    },
+    {
+        "question": "¿Qué condiciones deben cumplirse para que la media sea una buena medida de centralización?",
+        "answer": "Distribución simétrica - Ausencia de valores atípicos - Datos numéricos a nivel de intervalo o razón - Homogeneidad en la dispersión"
+    },
+    {
+        "question": "¿Qué criterios se usan para determinar si un valor es un outlier?",
+        "answer": "Un outlier (valor atípico) es un dato que se aleja significativamente del resto del conjunto"
+    },
+    {
+        "question": "¿Qué métodos se pueden usar para detectar valores atípicos?",
+        "answer": "Rango intercuartílico (IQR) - Puntaje Z (Z-score) - Regla de 3 sigmas - Boxplot (diagrama de caja)"
+    },
+    {
+        "question": "¿En qué situaciones es preferible usar la mediana en lugar de la media?",
+        "answer": "Distribuciones asimétricas o sesgadas - Presencia de valores atípicos (outliers) - Datos en escala ordinal"
+    },
+    {
+        "question": "¿Qué indica una desviación estándar alta respecto a los datos?",
+        "answer": "Indica que los datos están muy dispersos respecto a la media, es decir, hay una alta variabilidad en el conjunto."
+    },
+    {
+        "question": "¿Qué representa la moda y cómo se interpreta en conjuntos multimodales?",
+        "answer": "La moda es el valor que más se repite; en conjuntos multimodales hay varias modas, lo que indica múltiples concentraciones de datos."
+    },
+    {
+        "question": "¿Qué papel cumple el rango en el análisis exploratorio?",
+        "answer": "El rango muestra la diferencia entre el valor máximo y el mínimo, dando una idea general de la dispersión de los datos."
+    },
+    {
+        "question": "¿Qué condiciones deben cumplirse para aplicar la distribución binomial?",
+        "answer": "Número fijo de ensayos, solo dos posibles resultados por ensayo, probabilidad constante de éxito y ensayos independientes."
+    },
+    {
+        "question": "¿Qué significa el término “población” en estadística?",
+        "answer": "Se refiere al conjunto total de elementos sobre los cuales se desea obtener información o realizar inferencias."
+    },
+    {
+        "question": "¿Cómo se representa gráficamente la independencia de eventos?",
+        "answer": "Con diagramas de Venn sin intersección, o con tablas de contingencia donde la probabilidad conjunta equivale al producto de las marginales."
+    },
+    {
+        "question": "¿Qué información proporciona un boxplot sobre la dispersión y simetría?",
+        "answer": "Muestra la mediana, los cuartiles, el rango intercuartílico y los posibles valores atípicos, lo que permite evaluar simetría y variabilidad."
+    },
+    {
+        "question": "¿Cómo se calcula el valor esperado de una variable binomial?",
+        "answer": "Multiplicando el número de ensayos por la probabilidad de éxito (E[X] = n * p)."
+    },
+    {
+        "question": "¿En qué se diferencia la escala ordinal de la de intervalo?",
+        "answer": "La escala ordinal permite ordenar los datos, pero no medir distancias exactas entre ellos, a diferencia de la escala de intervalo."
+    },
+    {
+        "question": "¿Qué errores comunes se deben evitar al construir gráficos estadísticos?",
+        "answer": "No etiquetar ejes, usar escalas inadecuadas, sobrecargar de información o elegir el tipo de gráfico incorrecto para el tipo de dato."
     }
 ]
