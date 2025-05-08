@@ -1,4 +1,4 @@
-# 🤖 Chatbot GenAI - Caso de Estudio Recursos Humanos
+# 🤖 Chatbot GenAI - Profesor de Estadística
 
 Este proyecto demuestra cómo construir, evaluar y automatizar un chatbot de tipo RAG (Retrieval Augmented Generation) con buenas prácticas de **GenAIOps**.
 
@@ -19,7 +19,7 @@ El chatbot responde preguntas sobre beneficios, políticas internas y roles de u
 │   ├── run_eval.py               ← evaluación automática
 │   ├── rag_pipeline.py           ← lógica de ingestión y RAG
 │   └── prompts/
-│       ├── v1_asistente_rrhh.txt
+│       ├── v1_profesor_estadistica.txt
 │       └── v2_resumido_directo.txt
 ├── data/pdfs/                    ← documentos fuente
 ├── tests/
@@ -82,7 +82,7 @@ vectordb = load_vectorstore_from_disk()
 
 ```python
 from app.rag_pipeline import build_chain
-chain = build_chain(vectordb, prompt_version="v1_asistente_rrhh")
+chain = build_chain(vectordb, prompt_version="v1_profesor_estadistica")
 ```
 
 - Soporta múltiples versiones de prompt
