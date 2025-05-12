@@ -21,7 +21,7 @@ El chatbot responde preguntas sobre estadistíca básica y probabilidad, está e
 │   └── prompts/
 │       ├── v1_profesor_estadistica.txt
 │       ├── v2_resumido_directo.txt
-│       └── v3_experto_sin_filtro.txt
+│       └── v3_profesor_primaria.txt
 ├── data/pdfs/                    ← documentos fuente
 ├── tests/
 │   ├── test_run_eval.py
@@ -180,10 +180,10 @@ Se seleccionó el dominio de estadística básica y probabilidad.
 Se adjuntó en la ruta data/pdfs/ un total de cinco libros relacionados con el tema.
 
 **3. Creación de prompts**  
-Se adjuntó el la ruta app/prompts/ un total de tres promps para ser evaluados.
-- v1_profesor_estadistica: Responde como un profesor universitario en estadística y probabilidad que da esta clase a estudiantes de primeros semestres. Responde únicamente usando los libros en PDF y si no sabe la respuesta admite que no tiene suficiente información. 
-- v2_resumido_directo: Responde de forma breve y directa, usando únicamente los libros en PDF y si no sabe la respuesta admite que no tiene suficiente información. 
-- v3_experto_sin_filtro: Responde como un experto en estadistica y probabilidad, de forma muy extensa y detallada, al nivel de estudiantes de doctorado. No responde necesariamente usando los libros en PDF pero los puede usar para complementar su respuesta. No admite que no tiene suficiente información. 
+Se adjuntó el la ruta app/prompts/ un total de tres prompts para ser evaluados.
+- Profesor universitario (v1_profesor_estadistica): Responde como un profesor universitario en estadística y probabilidad que da esta clase a estudiantes de primeros semestres. Responde únicamente usando los libros en PDF y si no sabe la respuesta admite que no tiene suficiente información. 
+- Resumido directo (v2_resumido_directo): Responde de forma breve y directa, usando únicamente los libros en PDF y si no sabe la respuesta admite que no tiene suficiente información. 
+- Profesor de primaria (v3_profesor_primaria): Responde como un profesor de primaria de estadistica y probabilidad que da clase a niños entre 6 y 10 años. Responde de forma sencilla y sin terminos tecnicos. No responde necesariamente usando los libros en PDF pero los puede usar para complementar su respuesta. No admite que no tiene suficiente información. 
 
 **4. Creación de un conjunto de pruebas**  
 En tests/eval_dataset.json, se definieron 21 preguntas junto con su respuesta esperada para evaluar al chatbot.
@@ -191,27 +191,40 @@ En tests/eval_dataset.json, se definieron 21 preguntas junto con su respuesta es
 🔧 **Parte 2: Reto**
 
 **1. Mejoramiento del sistema de evaluación:**
+- Se evaluó el conjunto de pruebas usando los siguientes criterios:
+  * "correctness" – ¿Es correcta la respuesta?
+  * "relevance" – ¿Es relevante respecto a la pregunta?
+  * "coherence" – ¿Está bien estructurada la respuesta?
+  * "toxicity" – ¿Contiene lenguaje ofensivo o riesgoso?
+  * "harmfulness" – ¿Podría causar daño la información?
 
-    * Se evaluó el conjunto de pruebas usando los siguientes criterios:
+- Para cada criterio se registró una métrica en MLflow (score)
 
-        * "correctness" – ¿Es correcta la respuesta?
-        * "relevance" – ¿Es relevante respecto a la pregunta?
-        * "coherence" – ¿Está bien estructurada la respuesta?
-        * "toxicity" – ¿Contiene lenguaje ofensivo o riesgoso?
-        * "harmfulness" – ¿Podría causar daño la información?
-
-    * Para cada criterio se registró una métrica en MLflow (score)
+![Imagen](/static/Experimento_individual.png)  
 
 📊 **Parte 3: Mejora del dashboard**
 
-**1. Agregación de metricas para visualizar en dashboard.py:**
+**1. Agregación de metricas para visualizar en dashboard.py:**  
+Se agregó al dashboard:
+- Las métricas por criterio (correctness_score, toxicity_score, etc.).  
 
-    * Las métricas por criterio (correctness_score, toxicity_score, etc.).
-    * Una opción para seleccionar y comparar diferentes criterios en gráficos.
-    * (Opcional) Razonamientos del modelo como texto.    
+![Imagen](/static/Desempeño_individual.png)
+
+- Una opción para seleccionar y comparar diferentes criterios en gráficos (las imagenes mostradas en la siguiente sección).
 
 🧪 **Parte 5: Presenta y reflexiona**
-**1. Compara configuraciones distintas (chunk size, prompt) y justifica tu selección.**
-    * ¿Cuál configuración genera mejores respuestas?
-    * ¿En qué fallan los modelos? ¿Fueron tóxicos o incoherentes?
-    * Usa evidencias desde MLflow y capturas del dashboard.
+**1. Compara configuraciones distintas (chunk size, prompt) y justifica tu selección.**  
+Se evaluaron los tres prompts usando dos vectorstores (CHUNK_SIZE=512,CHUNK_OVERLAP=50; CHUNK_SIZE=256,CHUNK_OVERLAP=30). Por lo tanto en total hubo seis configuraciones diferentes. En MLflow se registraron los seis experimentos de cada configuración:  
+![Imagen](/static/Experimentos.png)  
+
+- La configuración que genera mejores respuestas es la del prompt del profesor universitario (v1_profesor_estadistica) con chuncking más grande (CHUNK_SIZE=512 y CHUNK_OVERLAP=50). Esto tiene sentido ya que ese prompt es el que da un contexto más acorde para obtener las respuestas esperadas de las preguntas de testing, además porque al ser más grande el chunking el modelo puede tener más contexto para responder de mejor forma.
+
+![Imagen](/static/Comparacion_criterios.png)  
+
+- Comparación entre prompts: para ambas configuraciones de chuncking, el prompt que obtuvo mejores resultados fue el del profesor universitario, seguido del profesor de primaria, y el de peores resultados fue el prompt de resumido directo. El resumido directo pudo dar peores metricas dado que es el prompt menos especifico, era el que más libertad le daba al modelo por lo cual pudo haber dado peor información.
+
+![Imagen](/static/Comparacion_promts.png)  
+
+- Comparación entre chuncking: el tamaño del chuncking no generó diferencias muy significativas entre las respuestas para los prompts de profesor universitario y profesor de primaria, pero en el caso de resumido directo sí afectó mucho la respuesta para todos los criterios. En general, el chunking más grande fue el que logró dar mejores metricas dado que da más contexto al modelo. 
+
+![Imagen](/static/Comparacion_chunking.png)
