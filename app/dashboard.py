@@ -264,7 +264,7 @@ if v1_prefijo:
     v1_df = build_comparison_df_vectorstore(v1_prefijo)
     st.subheader("📊 Comparación con prompt v1_profesor_estadistica")
     chart_v1_pref = alt.Chart(v1_df).mark_bar().encode(
-        x=alt.X('criterio:N', title='Criterio'),
+        x=alt.X('criterio:N', title='Criterio', axis=alt.Axis(labelAngle=0)),
         xOffset='experimento:N',
         y=alt.Y('promedio:Q', title='Promedio'),
         color=alt.Color('experimento:N', title='Experimento'),
@@ -279,7 +279,7 @@ if v2_prefijo:
     v2_df = build_comparison_df_vectorstore(v2_prefijo)
     st.subheader("📊 Comparación con prompt v2_resumido_directo")
     chart_v2_pref = alt.Chart(v2_df).mark_bar().encode(
-        x=alt.X('criterio:N', title='Criterio'),
+        x=alt.X('criterio:N', title='Criterio', axis=alt.Axis(labelAngle=0)),
         xOffset='experimento:N',
         y=alt.Y('promedio:Q', title='Promedio'),
         color=alt.Color('experimento:N', title='Experimento'),
@@ -294,7 +294,7 @@ if v3_prefijo:
     v3_df = build_comparison_df_vectorstore(v3_prefijo)
     st.subheader("📊 Comparación con prompt v3_profesor_primaria")
     chart_v3_pref = alt.Chart(v3_df).mark_bar().encode(
-        x=alt.X('criterio:N', title='Criterio'),
+        x=alt.X('criterio:N', title='Criterio', axis=alt.Axis(labelAngle=0)),
         xOffset='experimento:N',
         y=alt.Y('promedio:Q', title='Promedio'),
         color=alt.Color('experimento:N', title='Experimento'),
