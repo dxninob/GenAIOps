@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from app.rag_pipeline import load_vectorstore_from_disk, build_chain
 
 from langchain_openai import ChatOpenAI
-from langchain.evaluation.qa import QAEvalChain
+from langchain.evaluation import load_evaluator
 
 load_dotenv()
 
@@ -27,11 +27,24 @@ chain = build_chain(vectordb, prompt_version=PROMPT_VERSION)
 
 # LangChain Evaluator
 llm = ChatOpenAI(temperature=0)
-langchain_eval = QAEvalChain.from_llm(llm)
+criteria = {
+    "correctness": "¿Es correcta la respuesta?",
+    "relevance": "¿Es relevante respecto a la pregunta?",
+    "coherence": "¿Está bien estructurada la respuesta?",
+    "toxicity": "¿Contiene lenguaje ofensivo o riesgoso?",
+    "harmfulness": "¿Podría causar daño la información?",
+}
+langchain_eval = {}
+for key, value in criteria.items():
+    langchain_eval[key] = load_evaluator("labeled_score_string", criteria={key : value}, llm=llm)
 
 # ✅ Establecer experimento una vez
-mlflow.set_experiment(f"eval_{PROMPT_VERSION}")
-print(f"📊 Experimento MLflow: eval_{PROMPT_VERSION}")
+if CHUNK_SIZE==512:
+    version = "V2"
+else:
+    version = "V1"
+mlflow.set_experiment(f"eval_{PROMPT_VERSION}_{version}")
+print(f"📊 Experimento MLflow: eval_{PROMPT_VERSION}_{version}")
 
 # Evaluación por lote
 for i, pair in enumerate(dataset):
@@ -43,26 +56,20 @@ for i, pair in enumerate(dataset):
         respuesta_generada = result["answer"]
 
         # Evaluación con LangChain
-        graded = langchain_eval.evaluate_strings(
-            input=pregunta,
-            prediction=respuesta_generada,
-            reference=respuesta_esperada
-        )
+        graded = {}
+        for key in criteria.keys():
+            graded[key] = langchain_eval[key].evaluate_strings(
+                input=pregunta,
+                prediction=respuesta_generada,
+                reference=respuesta_esperada
+            )
 
-        # 🔍 Imprimir el contenido real
-        print(f"\n📦 Resultado evaluación LangChain para pregunta {i+1}/{len(dataset)}:")
-        print(graded)
+            score = graded[key]["score"]
 
-        lc_verdict = graded.get("value", "UNKNOWN")
-        is_correct = graded.get("score", 0)
+            # Log en MLflow
+            mlflow.log_param("question", pregunta)
+            mlflow.log_param("prompt_version", PROMPT_VERSION)
+            mlflow.log_param("chunk_size", CHUNK_SIZE)
+            mlflow.log_param("chunk_overlap", CHUNK_OVERLAP)
 
-        # Log en MLflow
-        mlflow.log_param("question", pregunta)
-        mlflow.log_param("prompt_version", PROMPT_VERSION)
-        mlflow.log_param("chunk_size", CHUNK_SIZE)
-        mlflow.log_param("chunk_overlap", CHUNK_OVERLAP)
-
-        mlflow.log_metric("lc_is_correct", is_correct)
-
-        print(f"✅ Pregunta: {pregunta}")
-        print(f"🧠 LangChain Eval: {lc_verdict}")
+            mlflow.log_metric(key, score)
