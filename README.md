@@ -6,7 +6,7 @@ Este proyecto demuestra cómo construir, evaluar y automatizar un chatbot de tip
 
 ## 🧠 Caso de Estudio
 
-El chatbot responde preguntas sobre beneficios, políticas internas y roles de una empresa ficticia (**Contoso Electronics**), usando como base una colección de documentos PDF internos.
+El chatbot responde preguntas sobre estadistíca básica y probabilidad, está enfocado especificamente para resolver dudas de esta materia a los estudientes de primeros semestres de pregrado. El chatbot usa como base una colección de documentos PDF de libros de estadística universitaria básica.
 
 ---
 
@@ -15,12 +15,13 @@ El chatbot responde preguntas sobre beneficios, políticas internas y roles de u
 ```
 ├── app/
 │   ├── ui_streamlit.py           ← interfaz simple del chatbot
-│   ├── main_interface.py         ← interfaz combinada con métricas
 │   ├── run_eval.py               ← evaluación automática
 │   ├── rag_pipeline.py           ← lógica de ingestión y RAG
+│   ├── dashboard.py              ← interfaz de metricas evaluadas
 │   └── prompts/
 │       ├── v1_profesor_estadistica.txt
-│       └── v2_resumido_directo.txt
+│       ├── v2_resumido_directo.txt
+│       └── v3_experto_sin_filtro.txt
 ├── data/pdfs/                    ← documentos fuente
 ├── tests/
 │   ├── test_run_eval.py
@@ -97,11 +98,6 @@ Versión básica:
 streamlit run app/ui_streamlit.py
 ```
 
-Versión combinada con métricas:
-```bash
-streamlit run app/main_interface.py
-```
-
 ---
 
 ### 5. 🧪 Evaluación automática de calidad
@@ -115,7 +111,7 @@ python app/run_eval.py
 Esto:
 - Usa `tests/eval_dataset.json` como ground truth
 - Genera respuestas usando el RAG actual
-- Evalúa con `LangChain Eval (QAEvalChain)`
+- Evalúa con `LangChain Evaluation (load_evaluator)`
 - Registra resultados en **MLflow**
 
 ---
@@ -175,30 +171,28 @@ pytest tests/test_run_eval.py
 
 ## 🎓 Desafío para estudiantes
 
-🧩 Parte 1: Personalización
+🧩 **Parte 1: Personalización**
 
-1. Elige un nuevo dominio
-Ejemplos: salud, educación, legal, bancario, etc.
+**1. Selección de un nuevo dominio**  
+Se seleccionó el dominio de estadística básica y probabilidad.
 
-2. Reemplaza los documentos PDF
-Ubícalos en data/pdfs/.
+**2. Reemplazo de los documentos PDF**  
+Se adjuntó en la ruta data/pdfs/ un total de cinco libros relacionados con el tema.
 
-3. Modifica o crea tus prompts
-Edita los archivos en app/prompts/.
+**3. Creación de prompts**  
+Se adjuntó el la ruta app/prompts/ un total de tres promps para ser evaluados.
+- v1_profesor_estadistica: Responde como un profesor universitario en estadística y probabilidad que da esta clase a estudiantes de primeros semestres. Responde únicamente usando los libros en PDF y si no sabe la respuesta admite que no tiene suficiente información. 
+- v2_resumido_directo: Responde de forma breve y directa, usando únicamente los libros en PDF y si no sabe la respuesta admite que no tiene suficiente información. 
+- v3_experto_sin_filtro: Responde como un experto en estadistica y probabilidad, de forma muy extensa y detallada, al nivel de estudiantes de doctorado. No responde necesariamente usando los libros en PDF pero los puede usar para complementar su respuesta. No admite que no tiene suficiente información. 
 
-4. Crea un conjunto de pruebas
-En tests/eval_dataset.json, define preguntas y respuestas esperadas para evaluar a tu chatbot.
+**4. Creación de un conjunto de pruebas**  
+En tests/eval_dataset.json, se definieron 21 preguntas junto con su respuesta esperada para evaluar al chatbot.
 
-✅ Parte 2: Evaluación Automática
+🔧 **Parte 2: Reto**
 
-1. Ejecuta run_eval.py para probar tu sistema actual.
-Actualmente, la evaluación está basada en QAEvalChain de LangChain, que devuelve una métrica binaria: correcto / incorrecto.
+**1. Mejoramiento del sistema de evaluación:**
 
-🔧 Parte 3: ¡Tu reto! (👨‍🔬 nivel investigador)
-
-1. Mejora el sistema de evaluación:
-
-    * Agrega evaluación con LabeledCriteriaEvalChain usando al menos los siguientes criterios:
+    * Se evaluó el conjunto de pruebas usando los siguientes criterios:
 
         * "correctness" – ¿Es correcta la respuesta?
         * "relevance" – ¿Es relevante respecto a la pregunta?
@@ -206,32 +200,18 @@ Actualmente, la evaluación está basada en QAEvalChain de LangChain, que devuel
         * "toxicity" – ¿Contiene lenguaje ofensivo o riesgoso?
         * "harmfulness" – ¿Podría causar daño la información?
 
-    * Cada criterio debe registrar:
+    * Para cada criterio se registró una métrica en MLflow (score)
 
-        * Una métrica en MLflow (score)
+📊 **Parte 3: Mejora del dashboard**
 
-    * Y opcionalmente, un razonamiento como artefacto (reasoning)
-
-    📚 Revisa la [documentación de LabeledCriteriaEvalChain](https://python.langchain.com/api_reference/langchain/evaluation/langchain.evaluation.criteria.eval_chain.LabeledCriteriaEvalChain.html) para implementarlo.
-
-📊 Parte 4: Mejora el dashboard
-
-1. Extiende dashboard.py o main_interface.py para visualizar:
+**1. Agregación de metricas para visualizar en dashboard.py:**
 
     * Las métricas por criterio (correctness_score, toxicity_score, etc.).
     * Una opción para seleccionar y comparar diferentes criterios en gráficos.
     * (Opcional) Razonamientos del modelo como texto.    
 
-🧪 Parte 5: Presenta y reflexiona
-1. Compara configuraciones distintas (chunk size, prompt) y justifica tu selección.
+🧪 **Parte 5: Presenta y reflexiona**
+**1. Compara configuraciones distintas (chunk size, prompt) y justifica tu selección.**
     * ¿Cuál configuración genera mejores respuestas?
     * ¿En qué fallan los modelos? ¿Fueron tóxicos o incoherentes?
     * Usa evidencias desde MLflow y capturas del dashboard.
-
-🚀 Bonus
-
-- ¿Te animas a crear un nuevo criterio como "claridad" o "creatividad"? Puedes definirlo tú mismo y usarlo con LabeledCriteriaEvalChain.
-
----
-
-¡Listo para ser usado en clase, investigación o producción educativa! 🚀
